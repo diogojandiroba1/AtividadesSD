@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: broker-rabbitmq
+    ports:
+      - "5672:5672" # porta AMQP (conexão do python)
+      - "15672:15672" # porta web
+
+  conversor-1:
+    # conversores, só copiar e colocar para mais
+    build: .
+    command: python conversor.py
+    depends_on:
+      - rabbitmq
+
+  conversor-2:
+    # conversores, só copiar e colocar para mais
+    build: .
+    command: python conversor.py
+    depends_on:
+      - rabbitmq
+
+  storage-1:
+    # Consomem da exchange fanout e salvam no disco
+    build: .
+    command: python storage.py
+    environment:
+      - NOME_FILA=fila_storage_1
+    volumes:
+      - ./armazenamento/storage1:/app/dados_salvos
+    depends_on:
+      - rabbitmq
+
+  storage-2:
+    # Consomem da exchange fanout e salvam no disco
+    build: .
+    command: python storage.py
+    environment:
+      - NOME_FILA=fila_storage_2
+    volumes:
+      - ./armazenamento/storage2:/app/dados_salvos
+    depends_on:
+      - rabbitmq
+
+  cliente-1:
+    # Produtor que lê imagens locais e posta na fila
+    build: .
+    command: python cliente.py
+    volumes:
+      - ./imagens_originais/cliente1:/app/imagens
+    depends_on:
+      - rabbitmq
+
+  cliente-2:
+    build: .
+    command: python cliente.py
+    volumes:
+      - ./imagens_originais/cliente2:/app/imagens
+    depends_on:
+      - rabbitmq
