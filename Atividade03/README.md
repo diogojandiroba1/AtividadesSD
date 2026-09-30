@@ -1,10 +1,10 @@
-# Atividade 01 / Unidade 1 (Pub/Sub e Microsserviços)  
+# Atividade 01 
 
-> **Protocolo:** MQTT (Eclipse Mosquitto) | **Linguagem:** Python 3.11 | **Conteinerização:** Docker & Docker Compose  
+## Protocolo:** MQTT (Eclipse Mosquitto) | **Linguagem:** Python 3.11 | **Conteinerização:** Docker & Docker Compose  
 
 ---
 
-## 🏛️ 1. Arquitetura do Sistema
+## Arquitetura do Sistema
 
 
 ```
@@ -28,7 +28,7 @@
 
 ---
 
-## 📋 2. Requisitos Atendidos
+## Requisitos Atendidos
 
 | # | Funcionalidade | Serviço Responsável | Tópico MQTT |
 |---|---|---|---|
@@ -45,42 +45,35 @@
 
 ---
 
-## 3. Comandos para Rodar a Aplicação
+## Comandos para Rodar a Aplicação
 
-### 3.1 Via Docker & Docker Compose 
+**Abrir Docker Desktop** 
 
-> **Pré-requisito:** Abrir **Docker Desktop** 
-
-1. **Construir as imagens e iniciar os microsserviços em segundo plano:**
+ **Construir as imagens e iniciar os microsserviços:**
    ```bash
    docker compose up --build -d
    ```
 
-2. **Verificar o status dos contêineres:**
-   ```bash
-   docker compose ps
-   ```
-
-3. **Executar Testes Automatizados (teste dos 10 requisitos):**
+ **Executar Testes Automatizados (teste dos 10 requisitos):**
    ```bash
    docker compose run --rm servico_veiculos python3 tests/test_suite_completa.py
    ```
 
-4. **Executar Menu Interativo:**
+ **Executar Menu Interativo:**
    ```bash
    docker compose run --rm servico_veiculos python3 client/cli.py
    ```
 
-6. **Encerrar a aplicação:**
+ **Encerrar a aplicação:**
    ```bash
    docker compose down
    ```
 
 ---
 
-## 🔍 4. Monitoramento do Barramento MQTT (Modo Raio-X)
+## Monitoramento do MQTT 
 
-Para auditar as mensagens trafegadas pelo barramento em tempo real durante a avaliação:
+Para auditar as mensagens pelo barramento durante a avaliação:
 
 ```bash
 docker exec -it denatran_broker mosquitto_sub -t "denatran/#" -v
