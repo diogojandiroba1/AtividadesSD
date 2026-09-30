@@ -31,7 +31,7 @@ docker compose down
 
 ---
 
-## 🔍 Onde Verificar os Resultados
+## Resultados
 
 - **Arquivos Convertidos:**
   - `armazenamento/storage1/` (todas as imagens em tons de cinza)

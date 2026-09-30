@@ -1,4 +1,4 @@
-# Avaliação de Desempenho: Cliente-Servidor vs P2P
+# Atividade 02 - Avaliação de Desempenho: Cliente-Servidor vs P2P
 
 Avaliação comparativa do tempo de transferência de arquivos sob diferentes arquiteturas de distribuição.
 

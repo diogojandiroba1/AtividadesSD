@@ -1,2 +1,47 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Caches e testes
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Ambientes virtuais
+venv/
+.venv/
+env/
+ENV/
+
+# Bancos de dados SQLite locais e temporários
+*.db
+*.sqlite3
+*.db-wal
+*.db-shm
+*.db-journal
+
+# Arquivos pesados de teste da Atividade 02 (binários de 5MB, 50MB, 500MB e torrents)
 *.torrent
 *.bin
+
+# Dados de execução da Atividade 01 (saída gerada em armazenamento)
+Atividade01/armazenamento/storage1/*.jpg
+Atividade01/armazenamento/storage1/*.jpeg
+Atividade01/armazenamento/storage1/*.png
+Atividade01/armazenamento/storage2/*.jpg
+Atividade01/armazenamento/storage2/*.jpeg
+Atividade01/armazenamento/storage2/*.png
+
+# Arquivos do Sistema Operacional
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDEs e editores
+.vscode/
+.idea/
+*.swp
+*~

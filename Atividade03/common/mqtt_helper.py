@@ -1,9 +1,11 @@
 import json
 import logging
 import uuid
+import threading
 import paho.mqtt.client as mqtt
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] (%(name)s) %(message)s")
+
 
 class MQTTServiceBase:
     def __init__(self, service_name: str, broker_host: str = "mosquitto", broker_port: int = 1883):
@@ -33,6 +35,11 @@ class MQTTServiceBase:
                 self.logger.info(f"Inscrito com sucesso no tópico: {topico}")
 
     def _on_message(self, client, userdata, msg):
+        # Despacha o processamento em uma thread separada para não bloquear
+        # o loop de rede do Paho MQTT quando um handler faz chamadas RPC síncronas
+        threading.Thread(target=self._executar_handler, args=(msg,), daemon=True).start()
+
+    def _executar_handler(self, msg):
         topico = msg.topic
         try:
             payload = json.loads(msg.payload.decode('utf-8'))

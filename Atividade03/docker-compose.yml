@@ -1,0 +1,85 @@
+services:
+  # =========================================================================
+  # 1. BROKER MQTT CENTRAL (Eclipse Mosquitto)
+  # =========================================================================
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: denatran_broker
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+    networks:
+      - denatran_net
+
+  # =========================================================================
+  # 2. MICROSSERVIÇO: Condutores
+  # =========================================================================
+  servico_condutores:
+    build: .
+    container_name: ms_condutores
+    restart: unless-stopped
+    command: python3 -u services/condutores_service.py
+    environment:
+      - BROKER_HOST=mosquitto
+      - DB_PATH=/app/data/condutores.db
+    volumes:
+      - dados_condutores:/app/data
+    depends_on:
+      - mosquitto
+    networks:
+      - denatran_net
+
+  # =========================================================================
+  # 3. MICROSSERVIÇO: Veículos e IPVA
+  # =========================================================================
+  servico_veiculos:
+    build: .
+    container_name: ms_veiculos
+    restart: unless-stopped
+    command: python3 -u services/veiculos_service.py
+    environment:
+      - BROKER_HOST=mosquitto
+      - DB_PATH=/app/data/veiculos.db
+    volumes:
+      - dados_veiculos:/app/data
+    depends_on:
+      - mosquitto
+    networks:
+      - denatran_net
+
+  # =========================================================================
+  # 4. MICROSSERVIÇO: Multas e Infrações
+  # =========================================================================
+  servico_multas:
+    build: .
+    container_name: ms_multas
+    restart: unless-stopped
+    command: python3 -u services/multas_service.py
+    environment:
+      - BROKER_HOST=mosquitto
+      - DB_PATH=/app/data/multas.db
+    volumes:
+      - dados_multas:/app/data
+    depends_on:
+      - mosquitto
+      - servico_condutores
+      - servico_veiculos
+    networks:
+      - denatran_net
+
+# ===========================================================================
+# VOLUMES NOMEADOS (Database per service)
+# ===========================================================================
+volumes:
+  dados_condutores:
+  dados_veiculos:
+  dados_multas:
+
+# ===========================================================================
+# REDE ISOLADA INTERNA
+# ===========================================================================
+networks:
+  denatran_net:
+    driver: bridge
