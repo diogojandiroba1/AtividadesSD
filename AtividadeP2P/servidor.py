@@ -7,7 +7,7 @@ import sys
 modo = sys.argv[1]
 caminho_arquivo = sys.argv[2]
 
-addr = ("", 9000)  # all interfaces, port 9000
+addr = ("", 9000)  
 s = socket.create_server(addr)
 print("Servidor aguardando conexões na porta 9000...")
 

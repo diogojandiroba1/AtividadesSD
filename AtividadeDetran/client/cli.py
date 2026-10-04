@@ -68,9 +68,7 @@ class DenatranClient:
 
 
 def imprimir_menu():
-    print("\n" + "=" * 55)
-    print("      SISTEMA NACIONAL DE TRÂNSITO (DENATRAN / MQTT)")
-    print("=" * 55)
+    print("SISTEMA NACIONAL DE TRÂNSITO (DENATRAN / MQTT)")
     print("1.  Cadastrar condutor")
     print("2.  Emplacar veículo")
     print("3.  Calcular IPVA do veículo (2%)")
@@ -82,7 +80,6 @@ def imprimir_menu():
     print("9.  Informar multas lançadas em um dado ano")
     print("10. Informar TOP 5 condutores com maiores pontuações")
     print("0.  Sair")
-    print("=" * 55)
 
 
 def main():

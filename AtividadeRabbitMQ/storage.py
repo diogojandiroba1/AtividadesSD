@@ -27,10 +27,10 @@ def salvar_imagem(ch, method, properties, body):
     if properties and properties.headers and 'filename' in properties.headers:
         nome_arquivo = properties.headers['filename']
     
-    # 2. Caminho na pasta montada pelo volume
+    # Caminho na pasta montada pelo volume
     caminho = os.path.join('/app/dados_salvos', nome_arquivo)
     
-    # 3. Grava os bytes diretamente no arquivo
+    # Grava os bytes diretamente no arquivo
     with open(caminho, 'wb') as f:
         f.write(body)
         

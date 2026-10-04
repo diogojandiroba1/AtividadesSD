@@ -2,7 +2,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import re
 import socket
 
-# Guarda os nós ativos: info_hash -> {(ip, porta)}
+
 peers_db = {}
 
 
@@ -31,13 +31,13 @@ class BitTorrentTracker(BaseHTTPRequestHandler):
     # Registra o nó solicitante
     peers_db[info_hash].add((ip_cliente, porta_cliente))
 
-    # Formato binário compacto BitTorrent (4 bytes IP + 2 bytes Porta)
+    # Formato BitTorrent 
     peers_bin = b''.join(
         socket.inet_aton(ip) + p.to_bytes(2, 'big')
         for ip, p in peers_db[info_hash]
     )
 
-    # Resposta bencoded: d8:intervali60e5:peers<tamanho>:<dados>e
+  
     resposta = (
         b'd8:intervali60e5:peers'
         + str(len(peers_bin)).encode()
@@ -53,7 +53,6 @@ class BitTorrentTracker(BaseHTTPRequestHandler):
     self.wfile.write(resposta)
 
   def log_message(self, format, *args):
-    # Silencia logs de requisição para não poluir o terminal
     pass
 
 

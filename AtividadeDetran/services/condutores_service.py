@@ -1,6 +1,6 @@
 """
 Microsserviço: Condutores
-Responsabilidade: Cadastrar e consultar condutores pelo CPF.
+Cadastrar e consultar condutores pelo CPF.
 """
 import sqlite3
 import os
@@ -30,7 +30,7 @@ class CondutoresService(MQTTServiceBase):
     def __init__(self, broker_host="mosquitto"):
         super().__init__("ServicoCondutores", broker_host=broker_host)
         init_db()
-        # Descomentado: registra os tópicos que esse serviço escuta
+        # registra os tópicos que esse serviço escuta
         self.registrar_handler("denatran/condutor/cadastrar/req", self.cadastrar_condutor)
         self.registrar_handler("denatran/condutor/consultar/req", self.consultar_condutor)
 
@@ -55,7 +55,7 @@ class CondutoresService(MQTTServiceBase):
 
     def consultar_condutor(self, dados: dict, envelope: dict) -> dict:
         """Processa a requisição de consulta por CPF."""
-        cpf = str(dados.get("cpf", "")).strip()  # <-- dados.get("cpf") em vez de dados.cpf
+        cpf = str(dados.get("cpf", "")).strip()  
         
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
@@ -64,7 +64,7 @@ class CondutoresService(MQTTServiceBase):
         conn.close()
         
         if resultado is not None:
-            # Retorna um dict estruturado com status e dados
+
             return {
                 "status": "sucesso",
                 "condutor": {

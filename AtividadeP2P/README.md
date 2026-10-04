@@ -32,7 +32,7 @@ python3 servidor.py pool <caminho_arquivo> <limite_N>
 
 Em outro terminal, executar o cliente de benchmark:
 ```bash
-python3 benchmark.py cs <num_clientes> [ip_servidor] [porta]
+python3 benchmark.py cs <num_clientes> [ip_servidor] [porta]  # Deixar sem ip e porta, caso não estiver rodando nada nas portas.
 ```
 
 ## 3. Testes P2P (BitTorrent via aria2c)

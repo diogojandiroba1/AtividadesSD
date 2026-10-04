@@ -36,7 +36,7 @@ class MQTTServiceBase:
 
     def _on_message(self, client, userdata, msg):
         # Despacha o processamento em uma thread separada para não bloquear
-        # o loop de rede do Paho MQTT quando um handler faz chamadas RPC síncronas
+        # o loop de rede do Paho MQTT quando um handler faz chamadas síncronas
         threading.Thread(target=self._executar_handler, args=(msg,), daemon=True).start()
 
     def _executar_handler(self, msg):

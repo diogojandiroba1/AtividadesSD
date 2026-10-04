@@ -7,7 +7,7 @@ import os
 import time
 import json
 
-# Garante que a pasta raiz esteja no path
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from client.cli import DenatranClient
 
@@ -17,7 +17,7 @@ def run_tests():
     print(f"[*] Conectando ao Broker MQTT em {broker}...")
     cli = DenatranClient(broker_host=broker)
     cli.iniciar()
-    time.sleep(1)  # Aguardar conexão e subscrição no canal de resposta
+    time.sleep(1)  
 
     try:
         print("\n" + "="*50)

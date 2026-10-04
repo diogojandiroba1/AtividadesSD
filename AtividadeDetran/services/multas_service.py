@@ -1,7 +1,6 @@
 """
 Microsserviço: Multas e Infrações
-Responsabilidade: Lançar multas, consultas por veículo/condutor/ano e ranking TOP 5.
-Padrão Distribuído: Realiza chamadas RPC internas via MQTT para outros microsserviços.
+Lançar multas, consultas por veículo/condutor/ano
 """
 import sqlite3
 import os
@@ -9,7 +8,6 @@ import sys
 import uuid
 import threading
 
-# Garante que a pasta raiz esteja no path para importar common
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from common.mqtt_helper import MQTTServiceBase
 
@@ -39,10 +37,9 @@ class MultasService(MQTTServiceBase):
         super().__init__("ServicoMultas", broker_host=broker_host)
         init_db()
 
-        # Dicionário de controle para chamadas RPC internas
         self.reply_pendentes = {}
 
-        # Canal exclusivo deste serviço para escutar respostas de outros microsserviços
+        # Canal deste serviço para escutar respostas de outros microsserviços
         self.canal_respostas_internas = f"denatran/multas/respostas_internas/{uuid.uuid4().hex[:6]}"
         self.registrar_handler(self.canal_respostas_internas, self._on_resposta_interna)
 

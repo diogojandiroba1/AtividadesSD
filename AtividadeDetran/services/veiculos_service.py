@@ -1,6 +1,6 @@
 """
 Microsserviço: Veículos e IPVA
-Responsabilidade: Emplacamento, cálculo de IPVA (2%), transferência de proprietário e consultas.
+Emplacamento, cálculo de IPVA (2%), transferência de proprietário e consultas.
 """
 import sqlite3
 import os

@@ -8,6 +8,9 @@ import threading
 import time
 
 
+# Testes
+
+
 def cliente_socket(servidor_ip, porta, barreira):
   barreira.wait()  # Aguarda todos os clientes estarem prontos para disparar
 
@@ -16,7 +19,6 @@ def cliente_socket(servidor_ip, porta, barreira):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((servidor_ip, porta))
 
-    # Descarta os dados recebidos em blocos de 64 KB
     while True:
       dados = s.recv(65536)
       if not dados:
@@ -95,9 +97,7 @@ def exibir_resultados(tempos):
   t_med = sum(tempos) / len(tempos)
   t_max = max(tempos)
 
-  print('\n' + '=' * 40)
   print('RESULTADOS DO EXPERIMENTO')
-  print('=' * 40)
   print(f'Clientes concluídos: {len(tempos)}')
   print(f'Tempo Mínimo:       {t_min:.4f} s')
   print(f'Tempo Médio:        {t_med:.4f} s')
